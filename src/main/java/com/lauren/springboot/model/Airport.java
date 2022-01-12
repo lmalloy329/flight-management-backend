@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="airports")
@@ -25,21 +23,36 @@ public class Airport {
 
 
 
-	public Airport() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 
-	public Airport(long airportId, String airportCode, String airportName, String airportLocation) {
+
+	public Airport(String airportCode, String airportName, String airportLocation) {
 		super();
-		this.airportId= airportId;
 		this.airportCode = airportCode;
 		this.airportName = airportName;
 		this.airportLocation = airportLocation;
 	}
 
  
+
+
+	
+	public Airport() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Airport [airportId=" + airportId + ", airportCode=" + airportCode + ", airportName=" + airportName
+				+ ", airportLocation=" + airportLocation + "]";
+	}
+
+
 
 
 

@@ -1,7 +1,6 @@
 package com.lauren.springboot.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 @Entity
 @Table(name = "flights")
 public class Flight {
@@ -25,6 +23,7 @@ public class Flight {
 	
 	@Column(name="airline")
 	private String airline;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="origin_table", 
 				joinColumns = @JoinColumn(name = "flight_id"), 
@@ -38,7 +37,7 @@ public class Flight {
 				inverseJoinColumns = @JoinColumn(name = "airport_id"))
 		private Set<Airport> destinationAirport =new HashSet<>();;
 	
-		@Column(name="aircraft")
+	@Column(name="aircraft")
 	private String aircraftCode;
 	
 	
@@ -47,9 +46,8 @@ public class Flight {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Flight(long id, String airline, String aircraftCode) {
+	public Flight(String airline, String aircraftCode) {
 		super();
-		this.id = id;
 		this.airline = airline;
 		this.aircraftCode = aircraftCode;
 	}

@@ -1,8 +1,12 @@
 package com.lauren.springboot.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lauren.springboot.exception.ResourceNotFoundException;
+import com.lauren.springboot.model.Airport;
 import com.lauren.springboot.model.Flight;
+import com.lauren.springboot.payload.FlightRequest;
+import com.lauren.springboot.payload.MessageResponse;
+import com.lauren.springboot.repository.AirportRepository;
 import com.lauren.springboot.repository.FlightRepository;
 
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -26,11 +34,49 @@ import com.lauren.springboot.repository.FlightRepository;
 public class FlightController {
 	@Autowired
 	private FlightRepository flightRepository;
+	
+	@Autowired
+	private AirportRepository airportRepository;
+	
 //get all flights
 	@GetMapping("/flights")
 	public List<Flight> getAllFlights(){
 		return flightRepository.findAll();
 	}
+	
+	//create new flight
+	@PostMapping("newFlight")
+	public ResponseEntity<?> registerFlight(@Valid @RequestBody FlightRequest flightRequest){
+		//create new account
+		Flight flight = new Flight(flightRequest.getAirline(), flightRequest.getAircraftCode());
+		Set<String> originAirport = flightRequest.getOriginAirport();
+		Set<Airport> originAirports = new HashSet<>();
+		Set<String> destinationAirport = flightRequest.getDestinationAirport();
+		Set<Airport> destinationAirports = new HashSet<>();
+
+		
+		if(originAirport==null) {
+			new RuntimeException("Error: Please assign airport");
+		
+		} else {
+			originAirport.forEach(airport->{
+				Airport origin = airportRepository.findByAirportCode(airport).orElseThrow(()-> new RuntimeException("Could not find origin airport" + airport));
+				
+				originAirports.add(origin);
+			});
+			
+			destinationAirport.forEach(airport ->{
+				Airport destination = airportRepository.findByAirportCode(airport).orElseThrow(()-> new RuntimeException("Coudl not find destination ariport" + airport));
+				destinationAirports.add(destination);
+			});
+		}
+		flight.setOriginAirport(originAirports);
+		flight.setDestinationAirport(destinationAirports);
+		flightRepository.save(flight);
+		return ResponseEntity.ok(new MessageResponse("Flight Registered Succesfully!"));
+		
+	
+}
 	//create new flight
 	@PostMapping("/flights")
 	public Flight createFlight(@RequestBody Flight flight){
