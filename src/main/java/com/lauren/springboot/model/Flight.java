@@ -1,6 +1,7 @@
 package com.lauren.springboot.model;
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name = "flights")
@@ -37,23 +40,79 @@ public class Flight {
 				inverseJoinColumns = @JoinColumn(name = "airport_id"))
 		private Set<Airport> destinationAirport =new HashSet<>();;
 	
-	@Column(name="aircraft")
-	private String aircraftCode;
+	@ManyToOne
+	@JoinColumn(name="aircraftCode")
+	private Aircraft aircraft;
 	
+	@OneToMany(mappedBy="flight")
+	private Set<Reservation> reservations;
+	
+	@Column(name="departureDate")
+	 Date departureDate;
+	
+	@Column(name="arrivalTime")
+	Date arrivalDate;
+	
+	@Column(name="flightCost")
+	private double flightCost;
 	
 	public Flight() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public Flight(String airline, String aircraftCode) {
+	public Flight( String airline, Date departureDate,
+			Date arrivalDate, double flightCost) {
 		super();
 		this.airline = airline;
-		this.aircraftCode = aircraftCode;
+		this.departureDate = departureDate;
+		this.arrivalDate = arrivalDate;
+		this.flightCost = flightCost;
 	}
 
 
-	
+
+	public Aircraft getAircraft() {
+		return aircraft;
+	}
+
+
+
+	public void setAircraft(Aircraft aircraft) {
+		this.aircraft = aircraft;
+	}
+
+
+
+	public Date getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
+	}
+
+
+
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public double getFlightCost() {
+		return flightCost;
+	}
+
+	public void setFlightCost(double flightCost) {
+		this.flightCost = flightCost;
+	}
+
 
 	public Set<Airport> getOriginAirport() {
 		return originAirport;
@@ -71,15 +130,6 @@ public class Flight {
 		this.destinationAirport = destinationAirport;
 	}
 
-	public String getAircraftCode() {
-		return aircraftCode;
-	}
-
-
-
-	public void setAircraftCode(String aircraftCode) {
-		this.aircraftCode = aircraftCode;
-	}
 
 	public long getId() {
 		return id;
@@ -93,6 +143,15 @@ public class Flight {
 	public void setAirline(String airline) {
 		this.airline = airline;
 	}
+
+	public Set<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+	
 
 	
 	

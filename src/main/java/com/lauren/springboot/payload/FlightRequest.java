@@ -1,5 +1,6 @@
 package com.lauren.springboot.payload;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -14,9 +15,13 @@ public class FlightRequest {
 	
 	private Set<String> destinationAirport;
 	
-	@NotBlank
-	@Size(max= 3)
-	private String aircraftCode;
+	Date departureDate;
+
+	Date arrivalDate;
+	
+	private double flightCost;
+	
+	private Set<String> aircraftCode;
 
 	public String getAirline() {
 		return airline;
@@ -42,13 +47,38 @@ public class FlightRequest {
 		this.destinationAirport = destinationAirport;
 	}
 
-	public String getAircraftCode() {
+	public Set<String> getAircraftCode() {
 		return aircraftCode;
 	}
 
-	public void setAircraftCode(String aircraftCode) {
+	public void setAircraftCode(Set<String> aircraftCode) {
 		this.aircraftCode = aircraftCode;
 	}
+
+	public Date getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
+	}
+
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public double getFlightCost() {
+		return flightCost;
+	}
+
+	public void setFlightCost(double flightCost) {
+		this.flightCost = flightCost;
+	}
+	
 	
 	
 }
