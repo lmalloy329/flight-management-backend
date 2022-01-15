@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "flights")
 public class Flight {
@@ -40,9 +42,11 @@ public class Flight {
 				inverseJoinColumns = @JoinColumn(name = "airport_id"))
 		private Set<Airport> destinationAirport =new HashSet<>();;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="aircraftCode")
 	private Aircraft aircraft;
+	
 	
 	@OneToMany(mappedBy="flight")
 	private Set<Reservation> reservations;

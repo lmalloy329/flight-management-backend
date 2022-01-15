@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="payments")
@@ -19,8 +20,8 @@ public class Payment {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	
+	@JsonIgnore
 	@OneToOne(cascade= CascadeType.ALL, mappedBy="payment")
-	@JoinColumn
 	private Reservation reservation;
 	
 	@Column(name="paymentMethod")

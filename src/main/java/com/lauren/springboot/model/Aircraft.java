@@ -20,7 +20,7 @@ public class Aircraft {
 	
 	@Column(name="aircraftCode")
 	private String aircraftCode;
-	
+
 	@OneToMany(mappedBy="aircraft")
 	private Set<Flight>flights;
 	

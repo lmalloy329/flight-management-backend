@@ -7,8 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="reservations")
@@ -17,17 +18,18 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long reservationId;
 	
-	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="CusotmerId", nullable = false)
+	@JoinColumn(name="CustomerId", nullable = false)
 	private Customer customer;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="FlightId", nullable=false)
 	private Flight flight;
 	
 	@OneToOne
-	@PrimaryKeyJoinColumn
+	@JoinColumn(name="paymentId")
 	private Payment payment;
 	
 	public Reservation() {}

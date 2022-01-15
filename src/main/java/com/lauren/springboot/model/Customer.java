@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 
 
 
+
 @Entity
 @Table(name ="customers", uniqueConstraints= {@UniqueConstraint(columnNames="email")})
 public class Customer {
@@ -89,6 +90,7 @@ public class Customer {
 	@Size(max = 200)
 	@Column(name="password")
 	private String password;
+	
 	
 	@OneToMany(mappedBy="customer")
 	private Set<Reservation> reservations;
