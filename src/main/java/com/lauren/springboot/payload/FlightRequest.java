@@ -1,6 +1,6 @@
 package com.lauren.springboot.payload;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -11,17 +11,17 @@ public class FlightRequest {
 	@Size(max=20)
 	private String airline;
 	
-	private Set<String> originAirport;
+	private String originAirport;
 	
-	private Set<String> destinationAirport;
+	private String destinationAirport;
 	
-	Date departureDate;
+	LocalDateTime departureDate;
 
-	Date arrivalDate;
+	LocalDateTime arrivalDate;
 	
 	private double flightCost;
 	
-	private Set<String> aircraftCode;
+	private String aircraftCode;
 
 	public String getAirline() {
 		return airline;
@@ -31,43 +31,43 @@ public class FlightRequest {
 		this.airline = airline;
 	}
 
-	public Set<String> getOriginAirport() {
+	public String getOriginAirport() {
 		return originAirport;
 	}
 
-	public void setOriginAirport(Set<String> originAirport) {
+	public void setOriginAirport(String originAirport) {
 		this.originAirport = originAirport;
 	}
 
-	public Set<String> getDestinationAirport() {
+	public String getDestinationAirport() {
 		return destinationAirport;
 	}
 
-	public void setDestinationAirport(Set<String> destinationAirport) {
+	public void setDestinationAirport(String destinationAirport) {
 		this.destinationAirport = destinationAirport;
 	}
 
-	public Set<String> getAircraftCode() {
+	public String getAircraftCode() {
 		return aircraftCode;
 	}
 
-	public void setAircraftCode(Set<String> aircraftCode) {
+	public void setAircraftCode(String aircraftCode) {
 		this.aircraftCode = aircraftCode;
 	}
 
-	public Date getDepartureDate() {
+	public LocalDateTime getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(Date departureDate) {
+	public void setDepartureDate(LocalDateTime departureDate) {
 		this.departureDate = departureDate;
 	}
 
-	public Date getArrivalDate() {
+	public LocalDateTime getArrivalDate() {
 		return arrivalDate;
 	}
 
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(LocalDateTime arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 

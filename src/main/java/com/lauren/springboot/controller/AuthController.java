@@ -52,7 +52,7 @@ public class AuthController {
 	
 	@Autowired
 	JwtUtils jwtUtils;
-	
+	//for when i fix securirty
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateCustomer(@Valid @RequestBody LoginRequest loginRequest){
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -71,7 +71,7 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error:Username is already Taken"));
 		}
 		//create new account
-//		Customer customer = new Customer(signUpRequest.getFirstName(), signUpRequest.getMiddleName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getEmail(), signUpRequest.getAddress(), signUpRequest.getCity(), signUpRequest.getState(), signUpRequest.getCountry(), encoder.encode(signUpRequest.getPassword()));
+//	for when i fix encoder	Customer customer = new Customer(signUpRequest.getFirstName(), signUpRequest.getMiddleName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getEmail(), signUpRequest.getAddress(), signUpRequest.getCity(), signUpRequest.getState(), signUpRequest.getCountry(), encoder.encode(signUpRequest.getPassword()));
 		Customer customer = new Customer(signUpRequest.getFirstName(), signUpRequest.getMiddleName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getEmail(), signUpRequest.getAddress(), signUpRequest.getCity(), signUpRequest.getState(), signUpRequest.getCountry(), signUpRequest.getPassword());
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();

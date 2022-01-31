@@ -1,10 +1,11 @@
 package com.lauren.springboot.model;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,23 +43,30 @@ public class Flight {
 				inverseJoinColumns = @JoinColumn(name = "airport_id"))
 		private Set<Airport> destinationAirport =new HashSet<>();;
 	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name="aircraftCode")
 	private Aircraft aircraft;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="flight")
 	private Set<Reservation> reservations;
 	
 	@Column(name="departureDate")
-	 Date departureDate;
+	 LocalDateTime departureDate;
 	
 	@Column(name="arrivalTime")
-	Date arrivalDate;
+	LocalDateTime arrivalDate;
 	
-	@Column(name="flightCost")
-	private double flightCost;
+	
+	@Column(name="firstTickets")
+	private long firstTickets;
+	
+	@Column(name="businessTickets")
+	private long businessTickets;
+	
+	@Column(name="economyTickets")
+	private long economyTickets;
 	
 	public Flight() {
 		super();
@@ -67,13 +75,15 @@ public class Flight {
 	
 	
 
-	public Flight( String airline, Date departureDate,
-			Date arrivalDate, double flightCost) {
+	public Flight( String airline, LocalDateTime departureDate,
+			LocalDateTime arrivalDate) {
 		super();
 		this.airline = airline;
 		this.departureDate = departureDate;
 		this.arrivalDate = arrivalDate;
-		this.flightCost = flightCost;
+		this.firstTickets=0;
+		this.businessTickets=0;
+		this.economyTickets=0;
 	}
 
 
@@ -90,31 +100,59 @@ public class Flight {
 
 
 
-	public Date getDepartureDate() {
+	public LocalDateTime getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(Date departureDate) {
+	public void setDepartureDate(LocalDateTime departureDate) {
 		this.departureDate = departureDate;
 	}
 
 
 
-	public Date getArrivalDate() {
+	public LocalDateTime getArrivalDate() {
 		return arrivalDate;
 	}
 
 
-	public void setArrivalDate(Date arrivalDate) {
+	public long getFirstTickets() {
+		return firstTickets;
+	}
+
+
+
+	public void setFirstTickets(long firstTickets) {
+		this.firstTickets = firstTickets;
+	}
+
+
+
+	public long getBusinessTickets() {
+		return businessTickets;
+	}
+
+
+
+	public void setBusinessTickets(long businessTickets) {
+		this.businessTickets = businessTickets;
+	}
+
+
+
+	public long getEconomyTickets() {
+		return economyTickets;
+	}
+
+
+
+	public void setEconomyTickets(long economyTickets) {
+		this.economyTickets = economyTickets;
+	}
+
+
+
+	public void setArrivalDate(LocalDateTime arrivalDate) {
 		this.arrivalDate = arrivalDate;
-	}
-
-	public double getFlightCost() {
-		return flightCost;
-	}
-
-	public void setFlightCost(double flightCost) {
-		this.flightCost = flightCost;
 	}
 
 

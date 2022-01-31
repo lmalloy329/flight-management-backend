@@ -1,8 +1,11 @@
 package com.lauren.springboot.database;
 
-import java.time.LocalDate;
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +72,7 @@ public class DataSeed implements CommandLineRunner{
 		
 		if(custRepo.count()==0) {
 			Customer cust1 = new Customer("Lauren", "Marie", "Malloy", "9176233543", "Lmalloy329@gmail.com", "204-50th ave","Breezy Point", "NY", "USA", "1234567" );
+//			System.out.print(employee);
 			cust1.setRoles(employee);
 			custRepo.save(cust1);
 			Customer cust2 = new Customer("Valerie", "Rose", "Good", "7184746051", "vg12@gmail.com", "133 Bay Road","Roxbury", "NY", "USA", "1234567" );	
@@ -81,10 +85,10 @@ public class DataSeed implements CommandLineRunner{
 	public void loadAircraftData() {
 		if(aircraftRepo.count()==0) {
 			Set<Aircraft> aircrafts= new HashSet<>();
-			aircrafts.add(new Aircraft("330", 8 , 30 , 177));
-			aircrafts.add(new Aircraft("747", 8 , 80 , 244));
-			aircrafts.add(new Aircraft("320", 0 , 28 , 126));
-			aircrafts.add(new Aircraft("900", 0 , 11 , 68));
+			aircrafts.add(new Aircraft("330", 8 , 450, 30 , 300, 177, 100));
+			aircrafts.add(new Aircraft("747", 8 , 500, 80 , 250, 244, 75));
+			aircrafts.add(new Aircraft("320", 0 , 0, 28, 260 , 126, 100));
+			aircrafts.add(new Aircraft("900", 0 ,0, 11, 150 , 68, 75));
 			
 			aircrafts.forEach(aircraft->{
 				aircraftRepo.save(aircraft);
@@ -127,8 +131,7 @@ public class DataSeed implements CommandLineRunner{
 			airports.add(new Airport("LGA", "LaGuardia Airport", "New York, New York"));
 			airports.add(new Airport("BNA", "Nashville International Airport", "Nashville, Tennessee"));
 			airports.add(new Airport("IAD", "Washington Dulles International Airport", "Washington, D.C."));
-			
-			
+					
 			airports.forEach(airport->{
 				airportRepo.save(airport);
 			});
@@ -143,25 +146,43 @@ public class DataSeed implements CommandLineRunner{
 	}
 	
 	public void loadFlightData() {
-		if(flightRepo.count()==0) {
-			LocalDate dt = LocalDate.now();
-			Date date = new Date();
-			for(int i =0;i<10;i++) {
-			
-			Flight f1 = new Flight("JetBlue", date, date, 100.00);
-			f1.setOriginAirport(getAirport("JFK"));
-			f1.setDestinationAirport(getAirport("LAX"));
+		if(flightRepo.count()==0) {	
+			List<Airport> airportsOrigin = new ArrayList<>();
+				airportsOrigin = airportRepo.findAll();
+			List<Airport> airportsDestination = new ArrayList<>();
+				airportsDestination = airportRepo.findAll();
+			for(Airport origin: airportsOrigin) {	
+				airportsDestination.remove(0);
+				for(Airport destination: airportsDestination) {
+			LocalDateTime dateOneA = LocalDateTime.of(2022, Month.JANUARY, 21, 8, 00);
+			LocalDateTime dateOneB = dateOneA.plusHours(3);
+			LocalDateTime dateTwoA = LocalDateTime.of(2022, Month.JANUARY,22, 8, 00);
+			LocalDateTime dateTwoB = dateTwoA.plusHours(3);
+			for(int i =0;i<30;i++) {
+				for(int j= 0; j<2;j++) {
+			Flight f1 = new Flight("JetBlue",dateOneA, dateOneB);
+			f1.setOriginAirport(getAirport(origin.getAirportCode()));
+			f1.setDestinationAirport(getAirport(destination.getAirportCode()));
 			f1.setAircraft(aircraftRepo.findByAircraftCode("747").orElseThrow(()-> new ResourceNotFoundException("Cannot find Aircraft")));
 			flightRepo.save(f1);
-//			Flight f2 = new Flight("United", date, date, 150.00);
-//			f2.setOriginAirport(getAirport(""));
-//			f2.setDestinationAirport(getAirport("LAX"));
-//			f1.setAircraft(aircraftRepo.findByAircraftCode("330").orElseThrow(()-> new ResourceNotFoundException("Cannot find Aircraft")));
-//			flightRepo.save(f2);
+			Flight f2 = new Flight("JetBlue",dateTwoA, dateTwoB);
+			f2.setOriginAirport(getAirport(destination.getAirportCode()));
+			f2.setDestinationAirport(getAirport(origin.getAirportCode()));
+			f2.setAircraft(aircraftRepo.findByAircraftCode("747").orElseThrow(()-> new ResourceNotFoundException("Cannot find Aircraft")));
+			flightRepo.save(f2);
+			dateOneA = dateOneA.plusHours(2);
+			dateOneB = dateOneB.plusHours(2);
+			dateTwoA = dateTwoB.plusHours(2); 
+			dateTwoB = dateTwoB.plusHours(2);
+				}
+			dateOneA = dateOneA.plusDays(2).minusHours(8);
+			dateOneB = dateOneB.plusDays(2).minusHours(8);
+			dateTwoA = dateTwoB.plusDays(2).minusHours(8); 
+			dateTwoB = dateTwoB.plusDays(2).minusHours(8);
 			}
-			System.out.println("flights: " + flightRepo.count());
+			}};
 		}
-		
+		System.out.println("flights: " + flightRepo.count());
 	}
 
 }

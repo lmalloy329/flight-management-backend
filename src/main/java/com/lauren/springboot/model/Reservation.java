@@ -1,5 +1,8 @@
 package com.lauren.springboot.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +21,17 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long reservationId;
 	
+	@NotBlank
+	@Column(name="seatClass")
+	private String seatClass;
+	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="CustomerId", nullable = false)
 	private Customer customer;
 	
-	@JsonIgnore
+
+
 	@ManyToOne
 	@JoinColumn(name="FlightId", nullable=false)
 	private Flight flight;
@@ -32,14 +40,36 @@ public class Reservation {
 	@JoinColumn(name="paymentId")
 	private Payment payment;
 	
+	
 	public Reservation() {}
 	
 	
 
-	public Reservation(Customer customer, Flight flight) {
+	public Reservation(Customer customer, Flight flight, String seatClass) {	
 		super();
 		this.customer = customer;
 		this.flight = flight;
+		this.seatClass = seatClass;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Reservation [reservationId=" + reservationId + ", seatClass=" + seatClass + ", customer=" + customer
+				+ ", flight=" + flight + ", payment=" + payment + "]";
+	}
+
+
+
+	public String getSeatClass() {
+		return seatClass;
+	}
+
+
+
+	public void setSeatClass(String seatClass) {
+		this.seatClass = seatClass;
 	}
 
 

@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 		return new AuthTokenFilter();
 	}
+	//this is where i am running into issues encoding the passowrd
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
 //		 PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();

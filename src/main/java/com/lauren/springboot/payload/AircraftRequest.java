@@ -9,11 +9,18 @@ public class AircraftRequest {
 
 	private long firstClass;
 	
+	private long firstPrice;
+	
 
 	private long businessClass;
 	
+	
+	private long businessPrice;
+	
 
 	private long economyClass;
+	
+	private long economyPrice;
 
 
 	public String getAircraftCode() {
@@ -54,6 +61,38 @@ public class AircraftRequest {
 	public void setEconomyClass(long economyClass) {
 		this.economyClass = economyClass;
 	}
+
+
+	public long getFirstPrice() {
+		return firstPrice;
+	}
+
+
+	public void setFirstPrice(long firstPrice) {
+		this.firstPrice = firstPrice;
+	}
+
+
+	public long getBusinessPrice() {
+		return businessPrice;
+	}
+
+
+	public void setBusinessPrice(long businessPrice) {
+		this.businessPrice = businessPrice;
+	}
+
+
+	public long getEconomyPrice() {
+		return economyPrice;
+	}
+
+
+	public void setEconomyPrice(long economyPrice) {
+		this.economyPrice = economyPrice;
+	}
+	
+	
 	
 
 }

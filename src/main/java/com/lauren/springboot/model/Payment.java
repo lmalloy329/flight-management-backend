@@ -21,7 +21,7 @@ public class Payment {
 	private long id;
 	
 	@JsonIgnore
-	@OneToOne(cascade= CascadeType.ALL, mappedBy="payment")
+	@OneToOne(mappedBy="payment", cascade = CascadeType.ALL)
 	private Reservation reservation;
 	
 	@Column(name="paymentMethod")

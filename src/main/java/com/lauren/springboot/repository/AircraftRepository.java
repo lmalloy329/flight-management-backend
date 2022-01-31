@@ -9,4 +9,5 @@ import com.lauren.springboot.model.Aircraft;
 
 public interface AircraftRepository extends JpaRepository<Aircraft, Long>{
 	Optional<Aircraft> findByAircraftCode(String aircraftCode);
+	
 }

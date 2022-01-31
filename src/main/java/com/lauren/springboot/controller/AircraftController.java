@@ -38,7 +38,7 @@ public class AircraftController {
 	//create new aircraft
 	@PostMapping("/aircrafts")
 	public ResponseEntity<?> createAircraft(@RequestBody AircraftRequest acRequest) {
-		Aircraft aircraft = new Aircraft(acRequest.getAircraftCode(), acRequest.getFirstClass(), acRequest.getBusinessClass(), acRequest.getEconomyClass());
+		Aircraft aircraft = new Aircraft(acRequest.getAircraftCode(), acRequest.getFirstClass(), acRequest.getFirstPrice(), acRequest.getBusinessClass(), acRequest.getBusinessPrice(), acRequest.getEconomyClass(), acRequest.getEconomyPrice());
 		Set<Flight> flights= new HashSet<>();
 		aircraft.setFlights(flights);
 		
